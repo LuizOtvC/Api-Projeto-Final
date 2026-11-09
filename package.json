@@ -1,0 +1,25 @@
+{
+  "name": "api-projeto-final",
+  "version": "1.0.0",
+  "description": "> Troque este título pelo nome do seu sistema e escreva, em uma frase, o que ele resolve e para quem.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+  "dev": "node --watch --env-file=.env src/server.js",
+  "start": "node src/server.js"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuizOtvC/Api-Projeto-Final.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuizOtvC/Api-Projeto-Final/issues"
+  },
+  "homepage": "https://github.com/LuizOtvC/Api-Projeto-Final#readme",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
