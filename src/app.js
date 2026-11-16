@@ -1,52 +1,45 @@
+// app.js: monta a aplicação Express (middlewares e rotas).
 import express from 'express';
+import chamadosRoutes from './routes/chamadosRoutes.js';
 
 const app = express();
 
-// Permite receber JSON no corpo das requisições (usaremos no próximo encontro)
+// Permite receber JSON no corpo das requisições (req.body)
 app.use(express.json());
 
-// Rota de saúde: usada por serviços de nuvem para saber se a API está viva
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', horario: new Date().toISOString() });
 });
 
-// Rota raiz: apresenta a API
 app.get('/', (req, res) => {
   res.json({
-    nome: 'API do meu projeto',
-    versao: '0.1.0',
-    rotas: ['GET /health'],
+    nome: 'API Help Desk TechNova',
+    versao: '0.2.0',
+    rotas: [
+      'GET /api/chamados',
+      'GET /api/chamados/:id',
+      'POST /api/chamados',
+      'PUT /api/chamados/:id',
+      'DELETE /api/chamados/:id',
+    ],
   });
 });
 
-// Dados em memória (no encontro 4 vão para o PostgreSQL)
+// Todas as rotas de chamados começam com /api/chamados
+app.use('/api/chamados', chamadosRoutes);
 
+// Qualquer rota que não existe: 404 em JSON
+app.use((req, res) => {
+  res.status(404).json({ erro: `Rota ${req.method} ${req.path} não existe` });
+});
 
-
-
-
-
-// Detalhe: :id é um parâmetro, chega em req.params.id (como TEXTO)
-app.get('/api/chamados/:id', (req, res) => {
-  const id = Number(req.params.id);              // "2" vira 2
-  const chamado = chamados.find((c) => c.id === id);
-  if (!chamado) {
-    return res.status(404).json({ erro: 'Chamado não encontrado' });  // return encerra aqui
+// Tratamento de erros: JSON mal escrito ou falha inesperada (sempre por último)
+app.use((erro, req, res, next) => {
+  if (erro.type === 'entity.parse.failed') {
+    return res.status(400).json({ erro: 'JSON inválido no corpo da requisição' });
   }
-  res.json(chamado);
-});
-
-app.get('/api/usuarios', (req, res) => {
-  res.json(usuarios);
-});
-
-app.get('/api/categorias', (req, res) => {
-  res.json(categorias);
-});
-
-// Lista
-app.get('/api/chamados', (req, res) => {
-  res.json(chamados);
+  console.error(erro);
+  res.status(500).json({ erro: 'Erro interno no servidor' });
 });
 
 export default app;

@@ -5,9 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-  "dev": "node --watch --env-file=.env src/server.js",
-  "start": "node src/server.js"
-},
+    "dev": "node --watch --env-file=.env src/server.js",
+    "start": "node src/server.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LuizOtvC/Api-Projeto-Final.git"

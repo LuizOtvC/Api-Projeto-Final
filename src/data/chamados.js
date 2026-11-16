@@ -5,3 +5,4 @@ export const chamados = [
     { id: 4, titulo: 'Impressora atolando', descricao: 'Impressora do 2º andar atola papel.', prioridade: 'baixa', status: 'aberto', categoria: 'Impressora', criadoEm: '2026-03-02T14:20:00Z' },
     { id: 5, titulo: 'VPN não conecta', descricao: 'Home office sem acesso à VPN.', prioridade: 'alta', status: 'fechado', categoria: 'Rede', criadoEm: '2026-03-03T10:00:00Z' }
   ];
+  
